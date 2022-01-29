@@ -1,0 +1,36 @@
+body{
+    background-size: cover;
+}
+
+.heading{
+    background-color:rgb(255, 85, 204);
+    width: 100%;
+    font-size: 30px;
+    margin: 0px;
+    color: rgb(255, 251, 0);
+    font-family: algerian;
+
+}
+
+.note{
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    font-family: comic sans ms;
+    font-weight: bold;
+}
+.btn-info{
+    font-size: 22px;
+    font-family: comic sans ms;
+}
+
+.btn-info:hover{
+    background: rgb(125, 2, 247);
+    font-family: algerian;
+}
+
+canvas{
+    border: 5px solid cyan;
+    border-radius: 20px;
+    box-shadow: 5px 5px 40px cyan;
+    margin-top: 6%;
+}
