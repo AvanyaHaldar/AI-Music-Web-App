@@ -1,44 +1,67 @@
-song_dynamite = "";
-song_levitating = "";
+dynamite_song="";
+levitating_song="";
+dynamite_songStatus="";
+levitating_songStatus="";
+rightWrist_x = 0;
+rightWrist_y = 0;
+leftWrist_x = 0;
+leftWrist_y = 0;
+scoreleftWrist = 0;
+song_name = "";
 
-right_wristX = 0;
-right_wristY = 0;
+function setup(){
+    canvas = createCanvas(600,530);
+    canvas.center();
 
-left_wristX = 0;
-left_wristY = 0;
+    video = createCapture(VIDEO);
+    video.hide();
 
-function setup() {
-  canvas = createCanvas(650, 500);
-  canvas.center();
-  video = createCapture(VIDEO);
-  video.hide();
-  posenet = ml5.poseNet(video, modelLoaded);
-  posenet.on("pose", getPoses);
+    poseNet = ml5.poseNet(video,modelLoaded);
+    poseNet.on('pose',gotposes);
 }
 
-function modelLoaded() {
-  console.log("Posenet Is Initialized");
+function preload(){
+  dynamite_song = loadSound("dynamite.mp3");
+    levitating_song = loadSound("levitating.mp3");
 }
 
-function getPoses(results) {
-  if (results.length > 0) {
-    console.log(results);
+function draw(){
+    image(video,0,0,600,530);
 
-    right_wristX = results[0].pose.rightWrist.x;
-    right_wristY = results[0].pose.rightWrist.y;
-    console.log("Right Wrist X=" + right_wristX + " Right Wrist Y=" + right_wristY);
+    fill("magenta");
+    stroke("purple");
 
-    left_wristX = results[0].pose.leftWrist.x;
-    left_wristY = results[0].pose.leftWrist.y;
-    console.log("Left Wrist X=" + left_wristX + " Left Wrist Y=" + left_wristY);
-  }
+    dyanamite_songStatus = dynamite_song.isPlaying();
+    console.log(dyanamite_songStatus);
+
+    if(scoreleftWrist > 0.2){
+        circle(leftWrist_x,leftWrist_y,20);
+        levitating_song.stop();
+        if(dyanamite_songStatus == false){
+          dynamite_song.play();
+          console.log("Song Name: Dynamite Song");
+            document.getElementById("song_id").innerHTML = "Song Name: Dynamite Song";
+        }
+    }
 }
 
-function preload() {
-  song_dynamite = loadSound("dynamite.mp3");
-  song_levitating = loadSound("levitating.mp3");
+function modelLoaded(){
+    console.log("poseNet Is Initialized");
 }
 
-function draw() {
-  image(video, 0, 0, 650, 500);
+function gotposes(results){
+    if(results.length > 0){
+        console.log(results);
+
+        scoreleftWrist = results[0].pose.keypoints[9].score;
+        console.log(scoreleftWrist);
+
+        leftWrist_x = results[0].pose.leftWrist.x;
+        leftWrist_y = results[0].pose.leftWrist.y;
+        console.log("leftWrist_x = "+leftWrist_x+" leftWrist_y = "+leftWrist_y);
+
+        rightWrist_x = results[0].pose.rightWrist.x;
+        rightWrist_y = results[0].pose.rightWrist.y;
+        console.log("rightWrist_x = "+rightWrist_x+" rightWrist_y = "+rightWrist_y);
+    }
 }
