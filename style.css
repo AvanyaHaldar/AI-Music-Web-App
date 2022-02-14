@@ -21,12 +21,29 @@ body{
 .btn-info{
     font-size: 22px;
     font-family: comic sans ms;
+    float: left;
+    margin-left: 20px;
+}
+
+.btn-success{
+    font-size: 22px;
+    font-family: comic sans ms;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+    width: 115px;
 }
 
 .btn-info:hover{
     background: rgb(125, 2, 247);
     font-family: algerian;
 }
+.btn-success:hover{
+    background: rgb(247, 231, 2);
+    font-family: algerian;
+    color: black;
+}
+
 
 canvas{
     border: 5px solid cyan;
